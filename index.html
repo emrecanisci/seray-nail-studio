@@ -125,9 +125,145 @@ footer .script{display:block;font-family:var(--script);font-size:2.2rem;color:va
   .nail{animation:none}
   html{scroll-behavior:auto}
 }
+
+/* ─── BACKGROUND ANIMATIONS ──────────────────── */
+.bg-canvas {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+
+/* Yumuşak gradient aurora */
+.aurora {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.18;
+  animation: aurora-drift var(--ad, 14s) ease-in-out infinite alternate;
+}
+
+.aurora-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #D9A3A4, #9A5760);
+  top: -200px; left: -150px; --ad: 16s;
+}
+
+.aurora-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #F4D3C5, #E8B8A7);
+  bottom: -100px; right: -100px; --ad: 12s;
+  opacity: 0.14;
+}
+
+.aurora-3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, #C9A8C2, #A58AA3);
+  top: 40%; left: 60%; --ad: 20s;
+  opacity: 0.1;
+}
+
+@keyframes aurora-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.08); }
+}
+
+/* Yüzen yaprakçık / petal */
+.petal {
+  position: absolute;
+  width: var(--pw, 10px); height: var(--ph, 14px);
+  background: var(--pc, rgba(154,87,96,0.18));
+  border-radius: 50% 10% 50% 10%;
+  animation:
+    petal-fall var(--pf, 12s) linear infinite,
+    petal-sway var(--ps, 4s) ease-in-out infinite alternate;
+  animation-delay: var(--pd, 0s);
+  opacity: 0;
+  left: var(--pl, 50%);
+  top: -30px;
+}
+
+@keyframes petal-fall {
+  0%   { top: -40px; opacity: 0; transform: rotate(0deg); }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.7; }
+  100% { top: 110vh; opacity: 0; transform: rotate(360deg); }
+}
+
+@keyframes petal-sway {
+  from { margin-left: -20px; }
+  to   { margin-left: 20px; }
+}
+
+/* Parlayan ışıltı noktaları */
+.sparkle {
+  position: absolute;
+  width: var(--sw, 4px); height: var(--sw, 4px);
+  background: var(--sc, rgba(154,87,96,0.6));
+  border-radius: 50%;
+  animation: sparkle-blink var(--sb, 3s) ease-in-out infinite;
+  animation-delay: var(--sd, 0s);
+  left: var(--sl, 50%);
+  top: var(--st, 50%);
+  box-shadow: 0 0 6px 2px var(--sc, rgba(154,87,96,0.3));
+}
+
+@keyframes sparkle-blink {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%       { opacity: 1; transform: scale(1.4); }
+}
+
+/* İnce yükselen çizgicikler */
+.line-rise {
+  position: absolute;
+  width: 1px; height: var(--lh, 60px);
+  background: linear-gradient(to top, transparent, rgba(154,87,96,0.25), transparent);
+  left: var(--ll, 50%);
+  animation: line-float var(--ld, 10s) ease-in-out infinite;
+  animation-delay: var(--ldelay, 0s);
+  opacity: 0;
+}
+
+@keyframes line-float {
+  0%   { bottom: -80px; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 0.5; }
+  100% { bottom: 110vh; opacity: 0; }
+}
+
+body > *:not(.bg-canvas) { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
+<div class="bg-canvas" aria-hidden="true">
+  <!-- Aurora glow -->
+  <div class="aurora aurora-1"></div>
+  <div class="aurora aurora-2"></div>
+  <div class="aurora aurora-3"></div>
+
+  <!-- Yüzen yaprakçıklar -->
+  <div class="petal" style="--pw:8px;--ph:12px;--pc:rgba(154,87,96,0.22);--pl:8%;--pf:14s;--ps:3.5s;--pd:0s"></div>
+  <div class="petal" style="--pw:12px;--ph:17px;--pc:rgba(217,163,164,0.28);--pl:18%;--pf:11s;--ps:4.2s;--pd:2s"></div>
+  <div class="petal" style="--pw:7px;--ph:10px;--pc:rgba(201,168,194,0.2);--pl:30%;--pf:16s;--ps:5s;--pd:4s"></div>
+  <div class="petal" style="--pw:10px;--ph:15px;--pc:rgba(154,87,96,0.18);--pl:45%;--pf:13s;--ps:3.8s;--pd:1s"></div>
+  <div class="petal" style="--pw:9px;--ph:13px;--pc:rgba(244,211,197,0.35);--pl:60%;--pf:15s;--ps:4.6s;--pd:3s"></div>
+  <div class="petal" style="--pw:6px;--ph:9px;--pc:rgba(217,163,164,0.22);--pl:72%;--pf:12s;--ps:3.2s;--pd:5s"></div>
+  <div class="petal" style="--pw:11px;--ph:16px;--pc:rgba(154,87,96,0.2);--pl:84%;--pf:17s;--ps:5.5s;--pd:0.5s"></div>
+  <div class="petal" style="--pw:8px;--ph:11px;--pc:rgba(201,168,194,0.25);--pl:93%;--pf:10s;--ps:4s;--pd:6s"></div>
+
+  <!-- Işıltılar -->
+  <div class="sparkle" style="--sw:3px;--sc:rgba(154,87,96,0.5);--sl:12%;--st:20%;--sb:2.8s;--sd:0s"></div>
+  <div class="sparkle" style="--sw:5px;--sc:rgba(217,163,164,0.6);--sl:25%;--st:55%;--sb:3.5s;--sd:1s"></div>
+  <div class="sparkle" style="--sw:3px;--sc:rgba(201,168,194,0.55);--sl:42%;--st:30%;--sb:2.2s;--sd:0.5s"></div>
+  <div class="sparkle" style="--sw:4px;--sc:rgba(154,87,96,0.45);--sl:58%;--st:70%;--sb:4s;--sd:1.5s"></div>
+  <div class="sparkle" style="--sw:3px;--sc:rgba(244,211,197,0.7);--sl:70%;--st:15%;--sb:3s;--sd:2s"></div>
+  <div class="sparkle" style="--sw:5px;--sc:rgba(154,87,96,0.4);--sl:80%;--st:45%;--sb:2.6s;--sd:0.8s"></div>
+  <div class="sparkle" style="--sw:3px;--sc:rgba(217,163,164,0.5);--sl:90%;--st:80%;--sb:3.8s;--sd:1.2s"></div>
+  <div class="sparkle" style="--sw:4px;--sc:rgba(201,168,194,0.6);--sl:35%;--st:85%;--sb:2.4s;--sd:2.5s"></div>
+
+  <!-- Yükselen çizgiler -->
+  <div class="line-rise" style="--lh:80px;--ll:15%;--ld:11s;--ldelay:0s"></div>
+  <div class="line-rise" style="--lh:55px;--ll:35%;--ld:14s;--ldelay:3s"></div>
+  <div class="line-rise" style="--lh:70px;--ll:55%;--ld:9s;--ldelay:1.5s"></div>
+  <div class="line-rise" style="--lh:90px;--ll:75%;--ld:12s;--ldelay:4s"></div>
+  <div class="line-rise" style="--lh:60px;--ll:90%;--ld:15s;--ldelay:2s"></div>
+</div>
+
 <main>
   <header class="hero">
     <h1>
