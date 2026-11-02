@@ -204,7 +204,7 @@ footer .script{display:block;font-family:var(--script);font-size:2.2rem;color:va
 @media (max-width: 640px) {
   .bar { display: none; }
   .mobile-nav { display: block; }
-  body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  
 }
 
 @media (min-width:640px){
@@ -317,6 +317,91 @@ footer .script{display:block;font-family:var(--script);font-size:2.2rem;color:va
 }
 
 body > *:not(.bg-canvas) { position: relative; z-index: 1; }
+
+/* ─── BOTTOM TAB BAR (mobil sabit) ──────────── */
+@media (max-width: 640px) {
+  .bar { display: none; }
+  body { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important; }
+}
+
+.tab-bar {
+  display: none;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 999;
+  height: calc(60px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: blur(20px) saturate(1.6);
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 640px) {
+  .tab-bar { display: flex; }
+}
+
+.tab-bar-inner {
+  width: 100%; height: 60px;
+  display: flex; align-items: center;
+}
+
+.tab-item {
+  flex: 1; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--muted);
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.18s;
+  cursor: pointer;
+}
+
+.tab-item.active { color: var(--accent); }
+
+.tab-icon {
+  font-size: 22px; line-height: 1;
+  position: relative;
+}
+
+.tab-item.active .tab-icon::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+}
+
+.tab-label {
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.01em; line-height: 1;
+}
+
+/* Ortadaki randevu butonu */
+.tab-item-cta {
+  flex: 1.2;
+}
+
+.tab-cta-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: transform 0.18s, box-shadow 0.18s;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab-cta-btn:active {
+  transform: scale(0.91);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.tab-cta-btn .tab-icon { font-size: 20px; }
+.tab-cta-btn .tab-label { font-size: 0.58rem; font-weight: 700; color: var(--accent-ink); }
 </style>
 </head>
 <body>
@@ -442,61 +527,56 @@ body > *:not(.bg-canvas) { position: relative; z-index: 1; }
   <a class="btn solid" href="https://ig.me/m/sseraynailstudio" target="_blank" rel="noopener">Randevu için DM</a>
 </div>
 
-<nav class="mobile-nav" aria-label="Mobil navigasyon">
-  <div class="mobile-nav-inner">
-    <a href="#" class="mnav-item active" id="mnav-home">
-      <span class="mnav-icon">🌸</span>
-      <span class="mnav-label">Ana Sayfa</span>
+
+<nav class="tab-bar" aria-label="Navigasyon">
+  <div class="tab-bar-inner">
+    <a href="#" class="tab-item active" id="tab-home">
+      <span class="tab-icon">🌸</span>
+      <span class="tab-label">Ana Sayfa</span>
     </a>
-    <a href="#hizmetler" class="mnav-item" id="mnav-svc">
-      <span class="mnav-icon">✨</span>
-      <span class="mnav-label">Hizmetler</span>
+    <a href="#hizmetler" class="tab-item" id="tab-svc">
+      <span class="tab-icon">✨</span>
+      <span class="tab-label">Hizmetler</span>
     </a>
-    <a href="https://ig.me/m/sseraynailstudio" target="_blank" rel="noopener" class="mnav-item mnav-cta">
-      <span class="mnav-icon">💬</span>
-      <span class="mnav-label">Randevu</span>
+    <a href="https://ig.me/m/sseraynailstudio" target="_blank" rel="noopener" class="tab-item tab-item-cta">
+      <div class="tab-cta-btn">
+        <span class="tab-icon">💬</span>
+        <span class="tab-label">Randevu</span>
+      </div>
     </a>
-    <a href="https://www.instagram.com/sseraynailstudio/" target="_blank" rel="noopener" class="mnav-item" id="mnav-ig">
-      <span class="mnav-icon">📸</span>
-      <span class="mnav-label">Instagram</span>
+    <a href="https://www.instagram.com/sseraynailstudio/" target="_blank" rel="noopener" class="tab-item" id="tab-ig">
+      <span class="tab-icon">📸</span>
+      <span class="tab-label">Instagram</span>
     </a>
-    <a href="#randevu" class="mnav-item" id="mnav-contact">
-      <span class="mnav-icon">📍</span>
-      <span class="mnav-label">İletişim</span>
+    <a href="#randevu" class="tab-item" id="tab-contact">
+      <span class="tab-icon">📍</span>
+      <span class="tab-label">İletişim</span>
     </a>
   </div>
 </nav>
 
 <script>
-  // Aktif sekme takibi
-  const mnavItems = document.querySelectorAll('.mnav-item:not(.mnav-cta)');
-  mnavItems.forEach(item => {
-    item.addEventListener('click', function() {
-      mnavItems.forEach(i => i.classList.remove('active'));
+  const tabs = document.querySelectorAll('.tab-item:not(.tab-item-cta)');
+  tabs.forEach(t => {
+    t.addEventListener('click', function() {
+      tabs.forEach(i => i.classList.remove('active'));
       this.classList.add('active');
     });
   });
 
-  // Scroll'a göre aktif sekme
-  const sections = [
-    { id: 'hizmetler', nav: 'mnav-svc' },
-    { id: 'randevu',   nav: 'mnav-contact' },
-  ];
-
-  const io2 = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        mnavItems.forEach(i => i.classList.remove('active'));
-        const match = sections.find(s => s.id === e.target.id);
-        if (match) document.getElementById(match.nav)?.classList.add('active');
-        else document.getElementById('mnav-home')?.classList.add('active');
-      }
+      if (!e.isIntersecting) return;
+      tabs.forEach(i => i.classList.remove('active'));
+      if (e.target.id === 'hizmetler') document.getElementById('tab-svc')?.classList.add('active');
+      else if (e.target.id === 'randevu') document.getElementById('tab-contact')?.classList.add('active');
+      else document.getElementById('tab-home')?.classList.add('active');
     });
   }, { threshold: 0.5 });
 
-  sections.forEach(s => {
-    const el = document.getElementById(s.id);
-    if (el) io2.observe(el);
+  ['hizmetler', 'randevu'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
   });
 </script>
 </body>
