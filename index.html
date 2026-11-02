@@ -89,6 +89,8 @@ h2{font-weight:300;font-size:1.75rem;line-height:1.25;letter-spacing:.01em;margi
 .services li{padding:18px 0;border-bottom:1px solid var(--line)}
 .services strong{display:block;font-weight:500;font-size:1.15rem}
 .services span{color:var(--muted)}
+.svc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price{font-weight:500;color:var(--accent);font-size:1.05rem;white-space:nowrap;flex-shrink:0}
 
 /* Kampanya */
 .promo{background:var(--surface);border-radius:28px;padding:32px 24px;text-align:center}
@@ -151,10 +153,46 @@ footer .script{display:block;font-family:var(--script);font-size:2.2rem;color:va
   <section id="hizmetler" aria-labelledby="h-hizmet">
     <h2 id="h-hizmet">Hizmetler</h2>
     <ul class="services">
-      <li><strong>Protez tırnak</strong><span>Doğal tırnağınıza uyumlu, istediğiniz boyda ve formda uzatma.</span></li>
-      <li><strong>Kalıcı oje</strong><span>Uzun süre parlak kalan, dayanıklı renkler.</span></li>
-      <li><strong>Manikür</strong><span>Bakımlı, temiz ve sağlıklı görünen eller.</span></li>
-      <li><strong>Özel tasarım</strong><span>Size özel hazırlanan desenler ve süslemeler.</span></li>
+      <li>
+        <strong>Manikür</strong>
+        <div class="svc-row"><span>Bakımlı, temiz eller.</span><span class="price">650 ₺</span></div>
+      </li>
+      <li>
+        <strong>Kalıcı Oje / Gel Polish</strong>
+        <div class="svc-row"><span>Uzun süre parlak kalan, dayanıklı renkler.</span><span class="price">1.000 ₺</span></div>
+      </li>
+      <li>
+        <strong>Jel Güçlendirme</strong>
+        <div class="svc-row"><span>Doğal tırnağı destekleyen jel uygulama.</span><span class="price">1.200 ₺</span></div>
+      </li>
+      <li>
+        <strong>Protez Tırnak</strong>
+        <div class="svc-row"><span>İstediğiniz boyda ve formda uzatma.</span><span class="price">1.500 ₺</span></div>
+      </li>
+      <li>
+        <strong>Nail Art</strong>
+        <div class="svc-row"><span>Size özel tasarım ve süslemeler.</span><span class="price">50 – 500 ₺</span></div>
+      </li>
+      <li>
+        <strong>Çıkarma İşlemi</strong>
+        <div class="svc-row"><span>Protez veya kalıcı oje çıkarma.</span><span class="price">500 ₺</span></div>
+      </li>
+      <li>
+        <strong>Tek Tırnak Tamir</strong>
+        <div class="svc-row"><span>Kırılan veya hasar gören tek tırnak tamiri.</span><span class="price">100 – 200 ₺</span></div>
+      </li>
+      <li>
+        <strong>İnci – Ayna Tozu</strong>
+        <div class="svc-row"><span>Özel toz efektleri.</span><span class="price">200 ₺</span></div>
+      </li>
+      <li>
+        <strong>Kedi Gözü – Disko Oje</strong>
+        <div class="svc-row"><span>Işıltılı ve göz alıcı efektler.</span><span class="price">350 ₺</span></div>
+      </li>
+      <li>
+        <strong>French</strong>
+        <div class="svc-row"><span>Klasik ve şık French manikür.</span><span class="price">300 ₺</span></div>
+      </li>
     </ul>
   </section>
 
