@@ -107,7 +107,7 @@ h2{font-weight:300;font-size:1.75rem;line-height:1.25;letter-spacing:.01em;margi
 footer{max-width:560px;margin:0 auto;padding:56px 24px 24px;text-align:center;color:var(--muted);font-size:.95rem}
 footer .script{display:block;font-family:var(--script);font-size:2.2rem;color:var(--accent);line-height:1.2}
 
-/* Sabit randevu çubuğu */
+/* Sabit randevu çubuğu — desktop */
 .bar{
   position:fixed;left:0;right:0;bottom:0;z-index:10;
   padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
@@ -116,6 +116,96 @@ footer .script{display:block;font-family:var(--script);font-size:2.2rem;color:va
   border-top:1px solid var(--line);
 }
 .bar .btn{max-width:528px;margin:0 auto}
+
+/* ─── MOBİL BOTTOM NAV ───────────────────────── */
+.mobile-nav {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  border-top: 1px solid var(--line);
+  animation: nav-slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nav-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.mobile-nav-inner {
+  display: flex; align-items: stretch;
+  max-width: 480px; margin: 0 auto;
+  gap: 6px; padding-top: 8px;
+}
+
+.mnav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px; padding: 8px 4px;
+  text-decoration: none; color: var(--muted);
+  border-radius: 16px;
+  transition: background 0.2s, color 0.2s, transform 0.18s;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.mnav-item:active { transform: scale(0.92); }
+
+.mnav-item.active,
+.mnav-item:focus-visible {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.mnav-icon {
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; line-height: 1;
+  position: relative;
+}
+
+/* aktif nokta */
+.mnav-item.active .mnav-icon::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+  animation: dot-pop 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes dot-pop {
+  from { transform: translateX(-50%) scale(0); }
+  to   { transform: translateX(-50%) scale(1); }
+}
+
+.mnav-label {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.02em;
+  line-height: 1; text-align: center;
+}
+
+/* CTA butonu ortada */
+.mnav-cta {
+  flex: 1.4;
+  background: var(--accent); color: var(--accent-ink) !important;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: transform 0.18s, box-shadow 0.18s !important;
+}
+
+.mnav-cta:active {
+  transform: scale(0.94) !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.mnav-cta .mnav-label { font-weight: 600; font-size: 0.72rem; }
+
+@media (max-width: 640px) {
+  .bar { display: none; }
+  .mobile-nav { display: block; }
+  body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+}
 
 @media (min-width:640px){
   .actions{flex-direction:row}
@@ -351,5 +441,63 @@ body > *:not(.bg-canvas) { position: relative; z-index: 1; }
 <div class="bar">
   <a class="btn solid" href="https://ig.me/m/sseraynailstudio" target="_blank" rel="noopener">Randevu için DM</a>
 </div>
+
+<nav class="mobile-nav" aria-label="Mobil navigasyon">
+  <div class="mobile-nav-inner">
+    <a href="#" class="mnav-item active" id="mnav-home">
+      <span class="mnav-icon">🌸</span>
+      <span class="mnav-label">Ana Sayfa</span>
+    </a>
+    <a href="#hizmetler" class="mnav-item" id="mnav-svc">
+      <span class="mnav-icon">✨</span>
+      <span class="mnav-label">Hizmetler</span>
+    </a>
+    <a href="https://ig.me/m/sseraynailstudio" target="_blank" rel="noopener" class="mnav-item mnav-cta">
+      <span class="mnav-icon">💬</span>
+      <span class="mnav-label">Randevu</span>
+    </a>
+    <a href="https://www.instagram.com/sseraynailstudio/" target="_blank" rel="noopener" class="mnav-item" id="mnav-ig">
+      <span class="mnav-icon">📸</span>
+      <span class="mnav-label">Instagram</span>
+    </a>
+    <a href="#randevu" class="mnav-item" id="mnav-contact">
+      <span class="mnav-icon">📍</span>
+      <span class="mnav-label">İletişim</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+  // Aktif sekme takibi
+  const mnavItems = document.querySelectorAll('.mnav-item:not(.mnav-cta)');
+  mnavItems.forEach(item => {
+    item.addEventListener('click', function() {
+      mnavItems.forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Scroll'a göre aktif sekme
+  const sections = [
+    { id: 'hizmetler', nav: 'mnav-svc' },
+    { id: 'randevu',   nav: 'mnav-contact' },
+  ];
+
+  const io2 = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        mnavItems.forEach(i => i.classList.remove('active'));
+        const match = sections.find(s => s.id === e.target.id);
+        if (match) document.getElementById(match.nav)?.classList.add('active');
+        else document.getElementById('mnav-home')?.classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) io2.observe(el);
+  });
+</script>
 </body>
 </html>
